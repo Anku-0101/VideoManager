@@ -1,0 +1,35 @@
+﻿<Window x:Class="VideoManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Video Manager" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <Button Content="Open Video" Command="{Binding OpenVideoCommand}" Width="80" Margin="10"/>
+            <Button Content="Play" Command="{Binding PlayCommand}" Width="80" Margin="10"/>
+            <Button Content="Pause" Command="{Binding PauseCommand}" Width="80" Margin="10"/>
+            <Button Content="Stop" Command="{Binding StopCommand}" Width="80" Margin="10"/>
+        </StackPanel>
+
+        <ListView Grid.Row="1" Name="videoListView" Margin="10,10,10,114" ItemsSource="{Binding Videos}" SelectionChanged="videoListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Video Name" Width="Auto" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Path" Width="Auto" DisplayMemberBinding="{Binding Path}"/>
+                    <GridViewColumn Header="Size(MB)" Width="Auto" DisplayMemberBinding="{Binding Size}"/>
+                    <GridViewColumn Header="Date Added" Width="Auto" DisplayMemberBinding="{Binding DateAdded}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <MediaElement Grid.Row="2" Name="mediaElement" Margin="10"  LoadedBehavior="Manual" Source="{Binding MediaElementSource}"/>
+    </Grid>
+</Window>

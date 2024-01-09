@@ -1,0 +1,14 @@
+D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager.csproj.AssemblyReference.cache
+D:\Projects\VideoManager\VideoManager\obj\Debug\MainWindow.g.cs
+D:\Projects\VideoManager\VideoManager\obj\Debug\App.g.cs
+D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager_MarkupCompile.cache
+D:\Projects\VideoManager\VideoManager\obj\Debug\MainWindow.baml
+D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager.g.resources
+D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager.Properties.Resources.resources
+D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager.csproj.GenerateResource.cache
+D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager.csproj.CoreCompileInputs.cache
+D:\Projects\VideoManager\VideoManager\bin\Debug\VideoManager.exe.config
+D:\Projects\VideoManager\VideoManager\bin\Debug\VideoManager.exe
+D:\Projects\VideoManager\VideoManager\bin\Debug\VideoManager.pdb
+D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager.exe
+D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager.pdb
