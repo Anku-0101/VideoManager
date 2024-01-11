@@ -9,6 +9,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -31,5 +32,9 @@
         </ListView>
 
         <MediaElement Grid.Row="2" Name="mediaElement" Margin="10"  LoadedBehavior="Manual" Source="{Binding MediaElementSource}"/>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10">
+            <Button Content="Call API" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0" Command="{Binding CallApiCommand}"/>
+            <TextBlock Text="{Binding ResultText}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0"/>
+        </StackPanel>
     </Grid>
 </Window>

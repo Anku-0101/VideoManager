@@ -55,10 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="VideoInfo.cs" />
+    <Compile Include="Model\HttpClientService.cs" />
+    <Compile Include="Utilities\RelayCommand.cs" />
+    <Compile Include="Model\VideoInfo.cs" />
     <Compile Include="VideoManagerModel.cs" />
-    <Compile Include="VideoManagerViewModel.cs" />
+    <Compile Include="ViewModel\VideoManagerViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -98,5 +99,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
