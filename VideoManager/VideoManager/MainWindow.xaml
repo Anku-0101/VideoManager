@@ -15,24 +15,25 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
-            <Button Content="Open Video" Command="{Binding OpenVideoCommand}" Width="80" Margin="10"/>
-            <Button Content="Play" Command="{Binding PlayCommand}" Width="80" Margin="10"/>
-            <Button Content="Pause" Command="{Binding PauseCommand}" Width="80" Margin="10"/>
-            <Button Content="Stop" Command="{Binding StopCommand}" Width="80" Margin="10"/>
+            <Button Content="Play"  Width="80" Margin="10" Click="PlayButton"/>
+            <Button Content="Pause" Width="80" Margin="10" Click="PauseButton"/>
+            <Button Content="Stop" Width="80" Margin="10" Click="StopButton"/>
         </StackPanel>
 
-        <ListView Grid.Row="1" Name="videoListView" Margin="10,10,10,114" ItemsSource="{Binding Videos}" SelectionChanged="videoListView_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Video Name" Width="Auto" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Path" Width="Auto" DisplayMemberBinding="{Binding Path}"/>
-                    <GridViewColumn Header="Size(MB)" Width="Auto" DisplayMemberBinding="{Binding Size}"/>
-                    <GridViewColumn Header="Date Added" Width="Auto" DisplayMemberBinding="{Binding DateAdded}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid Grid.Row="1" >
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Name:" />
+                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"  />
+                <TextBlock Text="DateAdded" />
+                <TextBox Text="{Binding DateAdded, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Size(MB)" />
+                <TextBox Text="{Binding Size, UpdateSourceTrigger=PropertyChanged}" Width="150" />
+                <TextBlock Text="File Path" />
+                <TextBox Text="{Binding FilePath, UpdateSourceTrigger=PropertyChanged}" Width="150" />
+            </StackPanel>
+        </Grid>
 
-        <MediaElement Grid.Row="2" Name="mediaElement" Margin="10"  LoadedBehavior="Manual"  Source="{Binding MediaElementSource}"/>
+        <MediaElement Grid.Row="2" Name="mediaElement" Margin="10" Height="400" LoadedBehavior="Manual"/>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10">
             <Button Content="Load Video Files" Height="40" Width="100" Margin="50" Command="{Binding LoadVideoFilesCommand}"/>
             <ListBox ItemsSource="{Binding VideoFiles}" SelectedItem="{Binding SelectedVideoFileName}">
@@ -42,10 +43,9 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="Play" Height="40" Width="100" Margin="50" Command="{Binding PlayVideoCommand}" />
-            <Button Content="Upload Video" Height="40" Width="100"  Command="{Binding UploadVideoCommand}"/>
+            <Button Content="Upload Video" Height="40" Width="100" Margin="20"  Command="{Binding UploadVideoCommand}"/>
             <Button Content="Download" Height="40" Width="100" Margin="20" Command="{Binding DownloadVideoCommand}" />
-            <Button Content="Show File Details" Height="40" Width="100" Command="{Binding ShowFileDetailsCommand}" />
+            <Button Content="Show File Details" Height="40" Width="100" Command="{Binding GetFileDetailsCommand}" />
         </StackPanel>
         
     </Grid>

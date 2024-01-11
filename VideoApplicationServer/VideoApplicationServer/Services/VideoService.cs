@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using VideoApplicationServer.Models;
 
 namespace VideoApplicationServer.Services
 {
@@ -11,9 +12,10 @@ namespace VideoApplicationServer.Services
     {
         private string videosFolderPath;
 
-        public string VideoPath 
-        { get { return videosFolderPath; } 
-          set { this.videosFolderPath = value; } 
+        public string VideoPath
+        {
+            get { return videosFolderPath; }
+            set { this.videosFolderPath = value; }
         }
 
         public VideoService()
@@ -58,6 +60,40 @@ namespace VideoApplicationServer.Services
                 // Log the exception or handle it as needed
                 throw;
             }
+        }
+
+        public Video GetVideoDetails(string fileName)
+        {
+            try
+            {
+                string filePath = Path.Combine(videosFolderPath, fileName+".mp4");
+
+                // Check if the file exists.
+                if (File.Exists(filePath))
+                {
+                    var fileInfo = new FileInfo(filePath);
+                    
+                    // Create a FileDetailsModel object with the file details.
+                    var fileDetails = new Video
+                    {
+                        Name = fileInfo.Name,
+                        Size = fileInfo.Length/(1024*1024), // File size in MB
+                        DateAdded = fileInfo.CreationTimeUtc, // Date when the file was added
+                        Path = fileInfo.FullName                                     // You can add more properties as needed
+                    };
+                    return fileDetails;
+
+                }
+                else
+                {
+                    throw new FileNotFoundException();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

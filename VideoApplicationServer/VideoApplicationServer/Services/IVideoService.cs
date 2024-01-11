@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using VideoApplicationServer.Models;
 
 namespace VideoApplicationServer.Services
 {
@@ -13,6 +14,7 @@ namespace VideoApplicationServer.Services
         IEnumerable<string> GetVideos();
         string VideoPath { get; set; }
         Stream GetVideoStream(string videoFileName);
-        
+
+        Video GetVideoDetails(string fileNmae);
     }
 }

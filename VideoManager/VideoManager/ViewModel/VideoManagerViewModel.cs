@@ -12,19 +12,12 @@ using System.Windows.Input;
 using VideoManager.Model;
 using VideoManager.Utilities;
 
+
 namespace VideoManager
 {
     class VideoManagerViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private ObservableCollection<VideoInfo> videos;
         private string selectedVideoPath;
-        public event Action OnPlayRequested;
-        private string resultText;
-        private string selectedVideoFileName;
-        private IEnumerable<string> videoFiles;
-        private Stream selectedVideoStream;
         private string uploadedVideoPath;
 
         public string UploadedVideoPath
@@ -37,6 +30,7 @@ namespace VideoManager
             }
         }
 
+        private Stream selectedVideoStream;
         public Stream SelectedVideoStream
         {
             get { return selectedVideoStream; }
@@ -46,6 +40,8 @@ namespace VideoManager
                 OnPropertyChanged(nameof(SelectedVideoStream));
             }
         }
+
+        private IEnumerable<string> videoFiles;
         public IEnumerable<string> VideoFiles
         {
             get { return videoFiles; }
@@ -56,20 +52,71 @@ namespace VideoManager
             }
         }
 
-        
+        private VideoInfo videoData;
+        public VideoInfo VideoData
+        {
+            get { return videoData; }
+            set
+            {
+                videoData = value;
+                OnPropertyChanged(nameof(VideoData));
+            }
+        }
+
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
+
+        private long size;
+        public long Size
+        {
+            get { return size; }
+            set
+            {
+                size = value;
+                OnPropertyChanged(nameof(Size));
+            }
+        }
+
+        private DateTime dateAdded;
+        public DateTime DateAdded
+        {
+            get { return dateAdded; }
+            set
+            {
+                dateAdded = value;
+                OnPropertyChanged(nameof(DateAdded));
+            }
+        }
+
+        private string filePath;
+
+        public string FilePath
+        {
+            get { return filePath; }
+            set
+            {
+                filePath = value;
+                OnPropertyChanged(nameof(FilePath));
+            }
+        }
         public VideoManagerViewModel()
         {
-            videos = new ObservableCollection<VideoInfo>();
-            OpenVideoCommand = new RelayCommand(OpenVideo);
-            PlayCommand = new RelayCommand(Play, CanPlay);
-            PauseCommand = new RelayCommand(Pause);
-            StopCommand = new RelayCommand(Stop);
             LoadVideoFilesCommand = new RelayCommand(LoadVideoFiles);
             PlayVideoCommand = new RelayCommand(PlayVideo);
             UploadVideoCommand = new RelayCommand(UploadVideo);
             DownloadVideoCommand = new RelayCommand(DownloadVideo);
+            GetFileDetailsCommand = new RelayCommand(GetFileDetails);
         }
 
+        private string selectedVideoFileName;
         public string SelectedVideoFileName
         {
             get { return selectedVideoFileName; }
@@ -80,6 +127,42 @@ namespace VideoManager
             }
         }
 
+
+        private async void GetFileDetails(object parameter)
+        {
+            try
+            {
+                // Make a GET request to your Web API endpoint
+                if (string.IsNullOrEmpty(SelectedVideoFileName))
+                {
+                    return;
+                }
+                SelectedVideoFileName = SelectedVideoFileName.Replace(".mp4", "");
+                string apiUrl = $"https://localhost:44326/api/videos/details/{SelectedVideoFileName}";
+                var response = HttpClientService.Instance.Get(apiUrl);
+
+                if (response!=null)
+                {
+                    // Deserialize the JSON response into the FileDetailsViewModel
+                    string jsonContent = await response;
+                    VideoData = JsonConvert.DeserializeObject<VideoInfo>(jsonContent);
+                    Name = videoData.Name;
+                    DateAdded = videoData.DateAdded;
+                    Size = videoData.Size;
+                    FilePath = videoData.Path;
+                }
+                else
+                {
+                    // Handle the error case here
+                    // You can display an error message to the user or log the error.
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during the process
+                // You can display an error message to the user or log the error.
+            }
+        }
         private async void DownloadVideo(object parameter)
         {
             // Check if a video is selected
@@ -155,7 +238,7 @@ namespace VideoManager
             HttpClientService.Instance.UploadToServer(filePath, apiUrl);
 
         }
-        private async void PlayVideo(object parameter)
+        public async void PlayVideo(object parameter)
         {
 
             try
@@ -214,18 +297,6 @@ namespace VideoManager
                 return null;
             }
         }
-        public ObservableCollection<VideoInfo> Videos
-        {
-            get { return videos; }
-            set
-            {
-                if (videos != value)
-                {
-                    videos = value;
-                    OnPropertyChanged(nameof(Videos));
-                }
-            }
-        }
 
         public string SelectedVideoPath
         {
@@ -255,55 +326,13 @@ namespace VideoManager
             }
         }
 
-        public ICommand OpenVideoCommand { get; }
-        public ICommand PlayCommand { get; }
-        public ICommand PauseCommand { get; }
-        public ICommand StopCommand { get; }
         public ICommand LoadVideoFilesCommand { get; }
         public ICommand PlayVideoCommand { get; }
         public ICommand UploadVideoCommand { get; }
         public ICommand DownloadVideoCommand { get; }
-        private void OpenVideo(object parameter)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "Video files (*.mp4, *.avi)|*.mp4;*.avi|All files (*.*)|*.*"
-            };
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                string filePath = openFileDialog.FileName;
-                string fileName = Path.GetFileName(filePath);
-                long fileSize = new FileInfo(filePath).Length/(1024*1024); // Get file size in bytes
-                DateTime dateAdded = DateTime.Now; // You can modify this based on your requirements
-
-                Videos.Add(new VideoInfo { Name = fileName, Path = filePath, Size = fileSize, DateAdded = dateAdded});
-
-                SelectedVideoPath = filePath;
-            }
-        }
-
-        private void Play(object parameter)
-        {
-            mediaElementSource = SelectedVideoPath;
-            OnPlayRequested?.Invoke();
-        }
-
-        private bool CanPlay(object parameter)
-        {
-            
-            return !string.IsNullOrEmpty(SelectedVideoPath);
-        }
-        private void Pause(object parameter)
-        {
-            // Add logic for pausing the video
-        }
-
-        private void Stop(object parameter)
-        {
-            // Add logic for stopping the video
-        }
-
+        public ICommand GetFileDetailsCommand { get; }
+        
+        public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

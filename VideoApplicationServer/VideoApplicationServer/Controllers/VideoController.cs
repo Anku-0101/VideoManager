@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using VideoApplicationServer.Services;
@@ -73,26 +74,60 @@ namespace VideoApplicationServer.Controllers
         {
             try
             {
-                var httpRequest = HttpContext.Current.Request;
-
-                if (httpRequest.Files.Count > 0)
+                // Check if the request contains a file
+                if (!Request.Content.IsMimeMultipartContent())
                 {
-                    var postedFile = httpRequest.Files[0];
+                    return BadRequest("No file uploaded.");
+                }
 
-                    string serverFilePath = Path.Combine(videoService.VideoPath, Path.GetFileName(postedFile.FileName));
+                // Specify the directory where you want to save the uploaded video
+                string uploadDirectory = @"D:\SERVER";
 
-                    postedFile.SaveAs(serverFilePath);
+                // Create a provider for reading the multipart/form-data
+                var provider = new MultipartFormDataStreamProvider(uploadDirectory);
 
+                // Read the request content synchronously and save the file
+                Request.Content.ReadAsMultipartAsync(provider).Wait();
+
+                // Check if there are files in the provider
+                if (provider.FileData.Count > 0)
+                {
+                    var file = provider.FileData[0]; // Assuming you are uploading a single file
+
+                    // Get the file name and move it to the specified directory
+                    string fileName = file.Headers.ContentDisposition.FileName.Trim('\"');
+                    string filePath = Path.Combine(uploadDirectory, fileName);
+                    File.Move(file.LocalFileName, filePath);
+
+                    // Optionally, you can return a success message
                     return Ok("Video uploaded successfully.");
                 }
                 else
                 {
-                    return BadRequest("No video file found in the request.");
+                    // No file in the request
+                    return BadRequest("No file uploaded.");
                 }
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as needed
+                // Handle any exceptions that may occur during the upload process
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/videos/details/{filename}")]
+        public IHttpActionResult GetFileDetails(string filename)
+        {
+            try
+            {
+                var fileDetails = videoService.GetVideoDetails(filename);
+                return Json(fileDetails);
+                
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur during the process.
                 return InternalServerError(ex);
             }
         }
