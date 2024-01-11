@@ -83,3 +83,15 @@ D:\Projects\VideoApplicationServer\VideoApplicationServer\obj\Debug\VideoApplica
 D:\Projects\VideoApplicationServer\VideoApplicationServer\obj\Debug\VideoApplicationServer.csproj.CopyComplete
 D:\Projects\VideoApplicationServer\VideoApplicationServer\obj\Debug\VideoApplicationServer.dll
 D:\Projects\VideoApplicationServer\VideoApplicationServer\obj\Debug\VideoApplicationServer.pdb
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\System.Threading.Tasks.Extensions.dll
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\Unity.Abstractions.dll
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\Unity.AspNet.WebApi.dll
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\Unity.Container.dll
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\WebActivatorEx.dll
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\System.Threading.Tasks.Extensions.xml
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\Unity.Abstractions.pdb
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\Unity.AspNet.WebApi.pdb
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\Unity.AspNet.WebApi.xml
+D:\Projects\VideoApplicationServer\VideoApplicationServer\bin\Unity.Container.pdb

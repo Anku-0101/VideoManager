@@ -10,6 +10,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -31,10 +32,21 @@
             </ListView.View>
         </ListView>
 
-        <MediaElement Grid.Row="2" Name="mediaElement" Margin="10"  LoadedBehavior="Manual" Source="{Binding MediaElementSource}"/>
+        <MediaElement Grid.Row="2" Name="mediaElement" Margin="10"  LoadedBehavior="Manual"  Source="{Binding MediaElementSource}"/>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="10">
-            <Button Content="Call API" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0" Command="{Binding CallApiCommand}"/>
-            <TextBlock Text="{Binding ResultText}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0"/>
+            <Button Content="Load Video Files" Height="40" Width="100" Margin="50" Command="{Binding LoadVideoFilesCommand}"/>
+            <ListBox ItemsSource="{Binding VideoFiles}" SelectedItem="{Binding SelectedVideoFileName}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Content="Play" Height="40" Width="100" Margin="50" Command="{Binding PlayVideoCommand}" />
+            <Button Content="Upload Video" Height="40" Width="100"  Command="{Binding UploadVideoCommand}"/>
+            <Button Content="Download" Height="40" Width="100" Margin="20" Command="{Binding DownloadVideoCommand}" />
+            <Button Content="Show File Details" Height="40" Width="100" Command="{Binding ShowFileDetailsCommand}" />
         </StackPanel>
+        
     </Grid>
 </Window>

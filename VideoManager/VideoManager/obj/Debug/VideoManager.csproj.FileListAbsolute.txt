@@ -12,3 +12,6 @@ D:\Projects\VideoManager\VideoManager\bin\Debug\VideoManager.exe
 D:\Projects\VideoManager\VideoManager\bin\Debug\VideoManager.pdb
 D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager.exe
 D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager.pdb
+D:\Projects\VideoManager\VideoManager\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\VideoManager\VideoManager\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\VideoManager\VideoManager\obj\Debug\VideoManager.csproj.CopyComplete

@@ -6,6 +6,10 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Unity;
+using Unity.AspNet.WebApi;
+using VideoApplicationServer.Controllers;
+using VideoApplicationServer.Services;
 
 namespace VideoApplicationServer
 {
@@ -18,6 +22,13 @@ namespace VideoApplicationServer
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+
+            var container = new UnityContainer();
+            container.RegisterType<IVideoService, VideoService>();
+            container.RegisterType<IVideoController, VideoController>();
+
+            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
 }
