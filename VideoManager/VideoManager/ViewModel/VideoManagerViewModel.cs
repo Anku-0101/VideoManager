@@ -128,7 +128,6 @@ namespace VideoManager
         {
             try
             {
-                // Make a GET request to your Web API endpoint
                 if (string.IsNullOrEmpty(SelectedVideoFileName))
                 {
                     return;
@@ -139,7 +138,7 @@ namespace VideoManager
 
                 if (response!=null)
                 {
-                    // Deserialize the JSON response into the FileDetailsViewModel
+                    // Deserializing the JSON response into the FileDetailsViewModel
                     string jsonContent = await response;
                     VideoData = JsonConvert.DeserializeObject<VideoInfo>(jsonContent);
                     Name = videoData.Name;
@@ -149,31 +148,27 @@ namespace VideoManager
                 }
                 else
                 {
-                    // Handle the error case here
-                    // You can display an error message to the user or log the error.
+                    Console.WriteLine("Response is null");
                 }
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that may occur during the process
-                // You can display an error message to the user or log the error.
+                Console.WriteLine("Error while fetching file details " + ex.Message);
             }
         }
         private async void DownloadVideo(object parameter)
         {
-            // Check if a video is selected
+            // Checking if a video is selected
             if (string.IsNullOrEmpty(SelectedVideoFileName))
             {
-                // You can display a message to the user or handle this case as needed.
                 return;
             }
 
-            // Create and configure the SaveFileDialog
+            // Creating and configuring the SaveFileDialog
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = SelectedVideoFileName; // Default file name
             saveFileDialog.Filter = "Video Files (*.mp4)|*.mp4|All files (*.*)|*.*";
 
-            // Show the dialog and get the result
             if (saveFileDialog.ShowDialog() == true)
             {
                 string savePath = saveFileDialog.FileName;
@@ -191,7 +186,6 @@ namespace VideoManager
                             SelectedVideoStream = videoStream;
                             using (FileStream fs = new FileStream(savePath, FileMode.Create))
                             {
-                                // Copy the selected video stream to the file stream
                                 SelectedVideoStream.CopyTo(fs);
                             }
                         }
@@ -203,12 +197,9 @@ namespace VideoManager
                 }
                 catch (Exception ex)
                 {
-                    // Handle any exceptions that may occur during the save process
-                    // You can display an error message to the user or log the error.
+                    Console.WriteLine("Error while downloading " + ex.Message);
                 }
             }
-                
-            
         }
 
         private void UploadVideo(object parameter)
@@ -222,8 +213,6 @@ namespace VideoManager
             if (openFileDialog.ShowDialog() == true)
             {
                 UploadedVideoPath = openFileDialog.FileName;
-
-                // Now, you can call the API to upload the video to the server
                 UploadVideoToServer(UploadedVideoPath);
             }
         }
@@ -232,8 +221,8 @@ namespace VideoManager
         {
             string apiUrl = "https://localhost:44326/api/videos/upload";
             HttpClientService.Instance.UploadToServer(filePath, apiUrl);
-
         }
+
         public async void PlayVideo(object parameter)
         {
 
@@ -263,7 +252,6 @@ namespace VideoManager
 
         }
 
-
         private async void LoadVideoFiles(object parameter)
         {
             string apiUrl = "https://localhost:44326/api/videos";
@@ -280,6 +268,7 @@ namespace VideoManager
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
+
         private IEnumerable<string> GetFilesFromJson(string jsonString)
         {
             try

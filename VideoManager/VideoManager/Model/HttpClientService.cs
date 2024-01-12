@@ -46,7 +46,6 @@ namespace VideoManager.Model
             try
             {
                 HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
-
                 if (response.IsSuccessStatusCode)
                 {
                     return await response.Content.ReadAsStreamAsync();
@@ -73,14 +72,15 @@ namespace VideoManager.Model
                     using (var content = new MultipartFormDataContent())
                     using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                     {
-                        // Create a stream content from the file stream
+                        // Creating a stream content from the file stream
                         var fileContent = new StreamContent(fileStream);
                         fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-                        // Add the file content to the multipart form data content
+                        
+                        // Adding the file content to the multipart form data content
                         content.Add(fileContent, "file", Path.GetFileName(filePath));
 
-                        // Send the request to the server
-                        HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+                        // Sending the request to the server
+                        HttpResponseMessage response = await client.PostAsync(apiUrl, content); // This is successful but at server end it's taking more time
 
                         // Checking if the upload was successful
                         if (response.IsSuccessStatusCode)
