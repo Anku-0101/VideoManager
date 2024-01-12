@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using VideoApplicationServer.Logger;
 using VideoApplicationServer.Models;
 
 namespace VideoApplicationServer.Services
@@ -11,7 +12,7 @@ namespace VideoApplicationServer.Services
     public class VideoService : IVideoService
     {
         private string videosFolderPath;
-
+        ILogger logger;
         public string VideoPath
         {
             get { return videosFolderPath; }
@@ -20,6 +21,7 @@ namespace VideoApplicationServer.Services
 
         public VideoService()
         {
+            logger = LoggerChainBuilder.BuildLoggerChain();
         }
 
         public IEnumerable<string> GetVideos()
@@ -36,7 +38,7 @@ namespace VideoApplicationServer.Services
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as needed
+                logger.Log(new LogMessage("Video not found " + ex.Message, LogLevel.Error));
                 throw;
             }
         }
@@ -57,7 +59,7 @@ namespace VideoApplicationServer.Services
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as needed
+                logger.Log(new LogMessage("Video stream not obtained "+ex.Message, LogLevel.Error));
                 throw;
             }
         }
@@ -86,11 +88,13 @@ namespace VideoApplicationServer.Services
                 }
                 else
                 {
+                    logger.Log(new LogMessage("File not found", LogLevel.Warning));
                     throw new FileNotFoundException();
                 }
             }
             catch (Exception)
             {
+                logger.Log(new LogMessage("unable to get video details", LogLevel.Error));
                 throw;
             }
 

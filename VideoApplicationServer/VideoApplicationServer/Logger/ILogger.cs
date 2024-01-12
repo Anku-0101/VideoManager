@@ -8,9 +8,7 @@ namespace VideoApplicationServer.Logger
 {
     public interface ILogger
     {
-        LogLevel LogLevel { get; set; }
-        ILogger NextLogger { get; set; }
-
-        void Log(LogLevel level, string message);
+        void Log(LogMessage message);
+        void SetNextLogger(ILogger nextLogger);
     }
 }

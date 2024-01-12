@@ -2,32 +2,26 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace VideoApplicationServer.Logger
 {
-    public class FileLogger : ILogger
+    public class FileLogger : BaseLogger
     {
-        public LogLevel LogLevel { get; set; }
-        public ILogger NextLogger { get; set; }
+        private string logFilePath = Utilities.Constants.LOGFILE;
 
-        public FileLogger(LogLevel logLevel)
+        protected override void WriteLog(LogMessage message)
         {
-            LogLevel = logLevel;
+            // Append the log message to the log file
+            using (StreamWriter writer = File.AppendText(logFilePath))
+            {
+                writer.WriteLine($"{DateTime.Now} [{message.LogLevel}] - {message.Message}");
+            }
         }
 
-        public void Log(LogLevel level, string message)
+        protected override bool IsLoggable(LogMessage message)
         {
-            if (level <= LogLevel)
-            {
-                string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
-
-                // Write the log message to a log file in the debug folder
-                File.AppendAllText(logFilePath, $"{DateTime.Now}: {message}\n");
-            }
-
-            NextLogger?.Log(level, message);
+            return message.LogLevel >= LogLevel.Warning; // Log warnings and errors to the file
         }
     }
 }
