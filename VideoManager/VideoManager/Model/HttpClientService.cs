@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace VideoManager.Model
@@ -56,13 +53,12 @@ namespace VideoManager.Model
                 }
                 else
                 {
-                    // You can handle non-success status codes as needed
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as needed
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -73,8 +69,7 @@ namespace VideoManager.Model
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    // Specify the API endpoint for video upload
-                    
+                    //API endpoint for video upload
                     using (var content = new MultipartFormDataContent())
                     using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                     {
@@ -87,7 +82,7 @@ namespace VideoManager.Model
                         // Send the request to the server
                         HttpResponseMessage response = await client.PostAsync(apiUrl, content);
 
-                        // Check if the upload was successful
+                        // Checking if the upload was successful
                         if (response.IsSuccessStatusCode)
                         {
                             Console.WriteLine("Video uploaded successfully.");

@@ -61,8 +61,6 @@
     <Compile Include="Model\HttpClientService.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Model\VideoInfo.cs" />
-    <Compile Include="VideoManagerModel.cs" />
-    <Compile Include="ViewModel\FileDetailsViewModel.cs" />
     <Compile Include="ViewModel\VideoManagerViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

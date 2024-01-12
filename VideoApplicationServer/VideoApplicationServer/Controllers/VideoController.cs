@@ -32,7 +32,7 @@ namespace VideoApplicationServer.Controllers
             {
                 
                 var videoList = videoService.GetVideos();
-                logger.Log(new LogMessage("Video list fetched", LogLevel.Info));
+                logger.Log(new LogMessage("Video list fetched", LogLevel.Error));
                 return Json(videoList);
             }
             catch (Exception ex)

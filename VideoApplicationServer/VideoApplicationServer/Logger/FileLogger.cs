@@ -13,7 +13,7 @@ namespace VideoApplicationServer.Logger
         protected override void WriteLog(LogMessage message)
         {
             // Append the log message to the log file
-            using (StreamWriter writer = File.AppendText(logFilePath))
+            using (StreamWriter writer = File.AppendText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, logFilePath)))
             {
                 writer.WriteLine($"{DateTime.Now} [{message.LogLevel}] - {message.Message}");
             }

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Net.Http;
-using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+
 
 namespace VideoManager
 {
@@ -39,12 +35,9 @@ namespace VideoManager
                 {
                     viewModel.SelectedVideoStream.CopyTo(tempFileStream);
                 }
-
-                // Create a Uri from the temporary file path
+                // Creating a Uri from the temporary file path
                 Uri videoUri = new Uri(temporaryVideoFilePath);
-
                 mediaElement.Source = videoUri;
-
                 // Play the video
                 mediaElement.Play();
             }
